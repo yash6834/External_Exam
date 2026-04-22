@@ -1,25 +1,6 @@
 import { useState } from 'react'
 import './App.css'
 
-const sampleRestaurants = [
-  {
-    id: 1,
-    restaurantName: 'Spice Garden',
-    ownerName: 'Aarav Sharma',
-    city: 'Jaipur',
-    cuisine: 'Indian',
-    phone: '9876543210',
-  },
-  {
-    id: 2,
-    restaurantName: 'Ocean Bowl',
-    ownerName: 'Riya Nair',
-    city: 'Kochi',
-    cuisine: 'Seafood',
-    phone: '9988776655',
-  },
-]
-
 const initialForm = {
   restaurantName: '',
   ownerName: '',
@@ -30,8 +11,16 @@ const initialForm = {
 
 function App() {
   const [formData, setFormData] = useState(initialForm)
-  const [restaurants, setRestaurants] = useState(sampleRestaurants)
-  const [message, setMessage] = useState('')
+  const [restaurants, setRestaurants] = useState([
+    {
+      id: 1,
+      restaurantName: 'Spice Garden',
+      ownerName: 'Aarav Sharma',
+      city: 'Jaipur',
+      cuisine: 'Indian',
+      phone: '9876543210',
+    },
+  ])
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -52,16 +41,11 @@ function App() {
 
     setRestaurants((current) => [newRestaurant, ...current])
     setFormData(initialForm)
-    setMessage('Restaurant registered successfully.')
   }
 
   return (
     <div className="container">
-      <h1>Restaurant Registration</h1>
-      <p style={{ textAlign: 'center', marginBottom: '20px', color: '#666' }}>
-        Fill out the form below and the registered restaurant data will appear
-        underneath.
-      </p>
+      <h1>Restaurant Registration Form</h1>
 
       <form className="form" onSubmit={handleSubmit}>
         <input
@@ -104,25 +88,19 @@ function App() {
           onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit">Register Restaurant</button>
       </form>
 
-      {message ? (
-        <p style={{ textAlign: 'center', color: 'green', marginBottom: '20px' }}>
-          {message}
-        </p>
-      ) : null}
-
-      <h2>Registered Restaurant Data</h2>
+      <h2>Registered Restaurants</h2>
 
       <div className="list">
         {restaurants.map((restaurant) => (
           <div className="card" key={restaurant.id}>
             <p>
-              <strong>Restaurant Name:</strong> {restaurant.restaurantName}
+              <strong>Name:</strong> {restaurant.restaurantName}
             </p>
             <p>
-              <strong>Owner Name:</strong> {restaurant.ownerName}
+              <strong>Owner:</strong> {restaurant.ownerName}
             </p>
             <p>
               <strong>City:</strong> {restaurant.city}
