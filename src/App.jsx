@@ -11,16 +11,8 @@ const initialForm = {
 
 function App() {
   const [formData, setFormData] = useState(initialForm)
-  const [restaurants, setRestaurants] = useState([
-    {
-      id: 1,
-      restaurantName: 'Spice Garden',
-      ownerName: 'Aarav Sharma',
-      city: 'Jaipur',
-      cuisine: 'Indian',
-      phone: '9876543210',
-    },
-  ])
+  const [restaurants, setRestaurants] = useState([])
+  const [editId, setEditId] = useState(null)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -34,12 +26,47 @@ function App() {
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const newRestaurant = {
-      id: restaurants.length + 1,
-      ...formData,
+    if (editId !== null) {
+      setRestaurants((current) =>
+        current.map((restaurant) =>
+          restaurant.id === editId ? { ...restaurant, ...formData } : restaurant,
+        ),
+      )
+      setEditId(null)
+    } else {
+      const newRestaurant = {
+        id: Date.now(),
+        ...formData,
+      }
+
+      setRestaurants((current) => [newRestaurant, ...current])
     }
 
-    setRestaurants((current) => [newRestaurant, ...current])
+    setFormData(initialForm)
+  }
+
+  const handleEdit = (restaurant) => {
+    setFormData({
+      restaurantName: restaurant.restaurantName,
+      ownerName: restaurant.ownerName,
+      city: restaurant.city,
+      cuisine: restaurant.cuisine,
+      phone: restaurant.phone,
+    })
+    setEditId(restaurant.id)
+  }
+
+  const handleDelete = (id) => {
+    setRestaurants((current) => current.filter((restaurant) => restaurant.id !== id))
+
+    if (editId === id) {
+      setEditId(null)
+      setFormData(initialForm)
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setEditId(null)
     setFormData(initialForm)
   }
 
@@ -88,31 +115,70 @@ function App() {
           onChange={handleChange}
           required
         />
-        <button type="submit">Register Restaurant</button>
+        <button type="submit">
+          {editId !== null ? 'Update Restaurant' : 'Register Restaurant'}
+        </button>
+        {editId !== null ? (
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={handleCancelEdit}
+          >
+            Cancel
+          </button>
+        ) : null}
       </form>
 
       <h2>Registered Restaurants</h2>
 
-      <div className="list">
-        {restaurants.map((restaurant) => (
-          <div className="card" key={restaurant.id}>
-            <p>
-              <strong>Name:</strong> {restaurant.restaurantName}
-            </p>
-            <p>
-              <strong>Owner:</strong> {restaurant.ownerName}
-            </p>
-            <p>
-              <strong>City:</strong> {restaurant.city}
-            </p>
-            <p>
-              <strong>Cuisine:</strong> {restaurant.cuisine}
-            </p>
-            <p>
-              <strong>Phone:</strong> {restaurant.phone}
-            </p>
-          </div>
-        ))}
+      <div className="table-wrapper">
+        <table className="restaurant-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Owner</th>
+              <th>City</th>
+              <th>Cuisine</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {restaurants.length === 0 ? (
+              <tr>
+                <td colSpan="6" className="empty-row">
+                  No restaurant data added yet.
+                </td>
+              </tr>
+            ) : (
+              restaurants.map((restaurant) => (
+                <tr key={restaurant.id}>
+                  <td>{restaurant.restaurantName}</td>
+                  <td>{restaurant.ownerName}</td>
+                  <td>{restaurant.city}</td>
+                  <td>{restaurant.cuisine}</td>
+                  <td>{restaurant.phone}</td>
+                  <td className="actions-cell">
+                    <button
+                      type="button"
+                      className="action-button edit-button"
+                      onClick={() => handleEdit(restaurant)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="action-button delete-button"
+                      onClick={() => handleDelete(restaurant.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   )
