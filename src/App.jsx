@@ -11,7 +11,16 @@ const initialForm = {
 
 function App() {
   const [formData, setFormData] = useState(initialForm)
-  const [restaurants, setRestaurants] = useState([])
+  const [restaurants, setRestaurants] = useState([
+    {
+      id: 1,
+      restaurantName: 'Spice Garden',
+      ownerName: 'Aarav Sharma',
+      city: 'Jaipur',
+      cuisine: 'Indian',
+      phone: '9876543210',
+    },
+  ])
   const [editId, setEditId] = useState(null)
 
   const handleChange = (event) => {
@@ -73,60 +82,80 @@ function App() {
   return (
     <div className="container">
       <h1>Restaurant Registration Form</h1>
+      <p className="subtitle">
+        Enter restaurant details below.
+      </p>
 
       <form className="form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="restaurantName"
-          placeholder="Restaurant Name"
-          value={formData.restaurantName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="ownerName"
-          placeholder="Owner Name"
-          value={formData.ownerName}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          value={formData.city}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="cuisine"
-          placeholder="Cuisine"
-          value={formData.cuisine}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">
-          {editId !== null ? 'Update Restaurant' : 'Register Restaurant'}
-        </button>
-        {editId !== null ? (
-          <button
-            type="button"
-            className="secondary-button"
-            onClick={handleCancelEdit}
-          >
-            Cancel
+        <label>
+          Restaurant Name
+          <input
+            type="text"
+            name="restaurantName"
+            placeholder="Enter restaurant name"
+            value={formData.restaurantName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Owner Name
+          <input
+            type="text"
+            name="ownerName"
+            placeholder="Enter owner name"
+            value={formData.ownerName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          City
+          <input
+            type="text"
+            name="city"
+            placeholder="Enter city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Cuisine
+          <input
+            type="text"
+            name="cuisine"
+            placeholder="Enter cuisine type"
+            value={formData.cuisine}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Phone Number
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter phone number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <div className="button-row">
+          <button type="submit">
+            {editId !== null ? 'Update Restaurant' : 'Register Restaurant'}
           </button>
-        ) : null}
+          {editId !== null ? (
+            <button
+              type="button"
+              className="secondary-button"
+              onClick={handleCancelEdit}
+            >
+              Cancel
+            </button>
+          ) : null}
+        </div>
       </form>
 
       <h2>Registered Restaurants</h2>
