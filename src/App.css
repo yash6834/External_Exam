@@ -1,0 +1,50 @@
+.container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.form input,
+.form button {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.form input {
+  border: 1px solid #ccc;
+}
+
+.form button {
+  border: none;
+  background: #d35400;
+  color: white;
+  cursor: pointer;
+}
+
+.list {
+  display: grid;
+  gap: 15px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  background: #fff7f2;
+}
