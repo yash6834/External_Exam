@@ -18,6 +18,7 @@ h2 {
   text-align: center;
   color: #666666;
   margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
 .form {
@@ -77,7 +78,7 @@ h2 {
 .restaurant-table td {
   border: 1px solid #dddddd;
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .restaurant-table th {

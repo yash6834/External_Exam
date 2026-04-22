@@ -83,7 +83,7 @@ function App() {
     <div className="container">
       <h1>Restaurant Registration Form</h1>
       <p className="subtitle">
-        Enter restaurant details below.
+        Enter restaurant details
       </p>
 
       <form className="form" onSubmit={handleSubmit}>
